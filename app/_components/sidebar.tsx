@@ -1,3 +1,7 @@
+import { LayoutGridIcon, PackageIcon, ShoppingBasketIcon } from "lucide-react";
+import { Button } from "./ui/button";
+import Link from "next/link";
+
 const Sidebar = () => {
   return (
 
@@ -6,9 +10,24 @@ const Sidebar = () => {
         <h1 className="font-bold text-2xl">STOCKLY</h1>
       </div>
       <div className="flex flex-col gap-2 p-2">
-        <button className="px-6 py-3">Dashboard</button>
-        <button className="px-6 py-3">Produtos</button>
-        <button className="px-6 py-3">Vendas</button>
+        <Button variant={"ghost"} className="justify-start gap-2" asChild>
+          <Link href='/'>
+            <LayoutGridIcon size={20} />
+            Dashboard
+          </Link>
+        </Button>
+        <Button variant={'ghost'} className="justify-start gap-2" asChild>
+          <Link href="/products">
+            <PackageIcon size={20} />
+            Produtos
+          </Link>
+        </Button>
+        <Button variant={'ghost'} className="justify-start gap-2" asChild>
+          <Link href='/sales'>
+            <ShoppingBasketIcon size={20} />
+            Vendas
+          </Link>
+        </Button>
       </div>
     </div>
   );
