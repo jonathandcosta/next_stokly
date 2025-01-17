@@ -3,7 +3,7 @@
 import { Product } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 
-export const columns: ColumnDef<Product>[] = [
+export const productTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",
     header: "Produto",
