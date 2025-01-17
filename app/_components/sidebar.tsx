@@ -7,9 +7,9 @@ const Sidebar = () => {
 
     <div className="w-64 bg-white">
       <div className="px-8 py-6">
-        <h1 className="font-bold text-2xl">STOCKLY</h1>
+        <h1 className="font-bold text-2xl text-green-500">STOCKLY</h1>
       </div>
-      <div className="flex flex-col gap-2 p-2">
+      <div className="flex flex-col gap-2 p-2 text-slate-500">
         <SidebarButton href="/">
           <LayoutGridIcon size={20} />
           Dashboard
