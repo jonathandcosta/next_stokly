@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from 'react-number-format'
+import { createProduct } from "@/app/_actions/product/create-product";
 
 
 const formSchema = z.object({
@@ -42,8 +43,12 @@ const AddProductButton = () => {
     }
   })
 
-  const onSubmit = (data: FormSchema) => {
-    console.log({ data })
+  const onSubmit = async (data: FormSchema) => {
+    try {
+      await createProduct(data)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (<Dialog>
