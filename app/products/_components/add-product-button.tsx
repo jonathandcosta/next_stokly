@@ -2,7 +2,7 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
-import { PlusIcon } from "lucide-react";
+import { Loader2Icon, PlusIcon } from "lucide-react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/_components/ui/dialog";
 
 import { z } from "zod"
@@ -127,7 +127,16 @@ const AddProductButton = () => {
             <DialogClose asChild>
               <Button variant="secondary" type="reset">Cancelar</Button>
             </DialogClose>
-            <Button type="submit">Salvar</Button>
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="gap-1.5"
+            >
+              {form.formState.isSubmitting && (
+                <Loader2Icon className="animate-spin" size={16} />
+              )}
+              Salvar
+            </Button>
           </DialogFooter>
 
         </form>
