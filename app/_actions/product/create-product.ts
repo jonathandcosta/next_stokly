@@ -11,7 +11,7 @@ export const createProduct = async ({
   price: number;
   stock: number;
 }) => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   await db.product.create({
     data: {
       name,
