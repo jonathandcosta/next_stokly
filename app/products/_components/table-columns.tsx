@@ -1,9 +1,11 @@
 "use client";
 
 import { Badge } from "@/app/_components/ui/badge";
+import { Button } from "@/app/_components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/app/_components/ui/dropdown-menu";
 import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { CircleIcon } from "lucide-react";
+import { CircleIcon, MoreHorizontalIcon } from "lucide-react";
 
 const getStatusLabel = (status: string) => {
   if (status === "IN_STOCK") {
@@ -38,4 +40,28 @@ export const productTableColumns: ColumnDef<Product>[] = [
         ;
     },
   },
+  {
+    accessorKey: "actions",
+    header: "Ações",
+    cell: () => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant='ghost'>
+              <MoreHorizontalIcon size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Editar</DropdownMenuItem>
+            <DropdownMenuItem>Deletar</DropdownMenuItem>
+            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem>Subscription</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+      )
+    }
+  }
 ];
