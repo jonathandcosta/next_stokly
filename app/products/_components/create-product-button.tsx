@@ -5,40 +5,21 @@ import { Input } from "@/app/_components/ui/input";
 import { Loader2Icon, PlusIcon } from "lucide-react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/_components/ui/dialog";
 
-import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from 'react-number-format'
-import { createProduct } from "@/app/_actions/product/create-product";
 import { useState } from "react";
+import { createProductSchema, CreateProductSchema } from "@/app/_actions/product/create-product/schema";
+import { createProduct } from "@/app/_actions/product/create-product/index.";
 
 
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: 'O nome do produto é obrigatório.',
-  }),
-  price: z.number().min(0.01, {
-    message: "O preço do produto é obrigatório.",
-  }),
-  stock: z.coerce.
-    number().
-    positive({
-      message: "A quantidade em estoque deve ser positiva."
-    }).int().min(0, {
-      message: 'A quantidade em estoque é obrigatorio.',
-    })
-})
-
-type FormSchema = z.infer<typeof formSchema>;
-
-
-const AddProductButton = () => {
+const CreateProductButton = () => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
 
-  const form = useForm<FormSchema>({
+  const form = useForm<CreateProductSchema>({
     shouldUnregister: true,
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createProductSchema),
     defaultValues: {
       name: "",
       price: 0,
@@ -46,7 +27,7 @@ const AddProductButton = () => {
     }
   })
 
-  const onSubmit = async (data: FormSchema) => {
+  const onSubmit = async (data: CreateProductSchema) => {
     try {
       await createProduct(data)
       setDialogIsOpen(false)
@@ -150,4 +131,4 @@ const AddProductButton = () => {
     </Dialog>);
 }
 
-export default AddProductButton;
+export default CreateProductButton;
