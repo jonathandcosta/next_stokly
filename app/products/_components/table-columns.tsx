@@ -75,7 +75,7 @@ export const productTableColumns: ColumnDef<Product>[] = [
               </AlertDialogTrigger>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DeleteProductDialogContent />
+          <DeleteProductDialogContent productId={product.id} />
         </AlertDialog>
 
       )

@@ -1,6 +1,21 @@
+import { toast } from "sonner";
+import { deleteProduct } from "../_actions/delete-product";
 import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
 
-const DeleteProductDialogContent = () => {
+interface DeleteProductDialogContentProps {
+  productId: string;
+}
+
+const DeleteProductDialogContent = ({ productId, }: DeleteProductDialogContentProps) => {
+  const handleContinueClick = async () => {
+    try {
+      await deleteProduct({ id: productId });
+      toast.success("Produto deletado com sucesso!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao deletar o produto. Tente novamente mais tarde.");
+    }
+  }
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
@@ -12,10 +27,9 @@ const DeleteProductDialogContent = () => {
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancelar</AlertDialogCancel>
-        <AlertDialogAction>Continuar</AlertDialogAction>
+        <AlertDialogAction onClick={handleContinueClick}>Continuar</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   );
 }
-
 export default DeleteProductDialogContent;
