@@ -1,6 +1,6 @@
 import { toast } from "sonner";
-import { deleteProduct } from "../_actions/delete-product";
-import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
+import { deleteProduct } from "../../_actions/product/delete-product";
+import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../../_components/ui/alert-dialog";
 
 interface DeleteProductDialogContentProps {
   productId: string;

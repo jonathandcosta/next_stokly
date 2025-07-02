@@ -1,5 +1,5 @@
 "use client";
-import DeleteProductDialogContent from "@/app/_components/delete-dialog-contet";
+import DeleteProductDialogContent from "@/app/products/_components/delete-dialog-contet";
 import { AlertDialog, AlertDialogTrigger, } from "@/app/_components/ui/alert-dialog";
 import { Button } from "@/app/_components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/app/_components/ui/dropdown-menu";
