@@ -9,7 +9,11 @@ import { Loader2Icon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 
-const UpsertProductDialogContent = () => {
+interface UpsertProductDialogContentProps {
+  onSuccess?: () => void;
+}
+
+const UpsertProductDialogContent = ({ onSuccess }: UpsertProductDialogContentProps) => {
 
   const form = useForm<CreateProductSchema>({
     shouldUnregister: true,
@@ -24,6 +28,7 @@ const UpsertProductDialogContent = () => {
   const onSubmit = async (data: CreateProductSchema) => {
     try {
       await createProduct(data)
+      onSuccess?.()
     } catch (error) {
       console.error(error)
     }
