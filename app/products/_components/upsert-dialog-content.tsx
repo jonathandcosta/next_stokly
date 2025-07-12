@@ -1,3 +1,5 @@
+'use client';
+
 import { createProduct } from "@/app/_actions/product/create-product/index.";
 import { createProductSchema, CreateProductSchema } from "@/app/_actions/product/create-product/schema";
 import { Button } from "@/app/_components/ui/button";
