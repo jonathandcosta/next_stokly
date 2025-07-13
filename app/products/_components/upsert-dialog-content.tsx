@@ -12,15 +12,16 @@ import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 
 interface UpsertProductDialogContentProps {
+  defaltValues?: CreateProductSchema;
   onSuccess?: () => void;
 }
 
-const UpsertProductDialogContent = ({ onSuccess }: UpsertProductDialogContentProps) => {
+const UpsertProductDialogContent = ({ defaltValues, onSuccess }: UpsertProductDialogContentProps) => {
 
   const form = useForm<CreateProductSchema>({
     shouldUnregister: true,
     resolver: zodResolver(createProductSchema),
-    defaultValues: {
+    defaultValues: defaltValues ?? {
       name: "",
       price: 0,
       stock: 1,

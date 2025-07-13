@@ -1,6 +1,6 @@
 "use client";
 
-import TableDropdownMenu from "@/app/_components/table-dropdownmenu";
+import TableDropdownMenu from "@/app/products/_components/table-dropdownmenu";
 import { AlertDialog } from "@/app/_components/ui/alert-dialog";
 import { Badge } from "@/app/_components/ui/badge";
 
