@@ -28,6 +28,8 @@ const UpsertProductDialogContent = ({ defaltValues, onSuccess }: UpsertProductDi
     }
   })
 
+  const isEditing = !!defaltValues;
+
   const onSubmit = async (data: CreateProductSchema) => {
     try {
       await createProduct(data)
@@ -42,7 +44,7 @@ const UpsertProductDialogContent = ({ defaltValues, onSuccess }: UpsertProductDi
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <DialogHeader>
-            <DialogTitle>Criar produto</DialogTitle>
+            <DialogTitle>{isEditing ? "Editar" : "Criar"} produto</DialogTitle>
             <DialogDescription>
               Insira as informações abaixo
             </DialogDescription>
