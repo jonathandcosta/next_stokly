@@ -8,8 +8,14 @@ import { useState } from "react";
 import UpsertProductDialogContent from "./upsert-dialog-content";
 import { Dialog, DialogTrigger } from "../../_components/ui/dialog";
 
+export interface Product {
+  id: string;
+  name: string;
+  stock: number;
+  price: number;
+}
 
-const TableDropdownMenu = ({ productId }: { productId: string }) => {
+const TableDropdownMenu = ({ product }: { product: Product }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogOpenEdit, setDialogOpenEdit] = useState(false);
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false);
@@ -31,7 +37,7 @@ const TableDropdownMenu = ({ productId }: { productId: string }) => {
 
             <DropdownMenuItem
               className="gap-1.5"
-              onClick={() => navigator.clipboard.writeText(productId)}
+              onClick={() => navigator.clipboard.writeText(product.id)}
             >
               <ClipboardCopyIcon size={16} />
               Copiar ID
@@ -64,8 +70,13 @@ const TableDropdownMenu = ({ productId }: { productId: string }) => {
             </AlertDialogTrigger>
           </DropdownMenuContent >
         </DropdownMenu >
-        <UpsertProductDialogContent />
-        <DeleteProductDialogContent productId={productId} />
+        <UpsertProductDialogContent
+          defaltValues={{
+            name: product.name,
+            stock: product.stock,
+            price: Number(product.price),
+          }} />
+        <DeleteProductDialogContent productId={product.id} />
       </Dialog>
     </AlertDialog >
   )

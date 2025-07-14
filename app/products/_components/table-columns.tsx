@@ -45,11 +45,11 @@ export const productTableColumns: ColumnDef<Product>[] = [
     accessorKey: "actions",
     header: "Ações",
     cell: (row) => {
-      const product = row.row.original
+      const product = row.row.original as Product;
       return (
         <AlertDialog>
-          <TableDropdownMenu productId={product.id} />
-        </AlertDialog>
+          <TableDropdownMenu product={product} />
+        </AlertDialog >
 
       )
     }
