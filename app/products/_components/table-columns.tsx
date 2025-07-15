@@ -47,9 +47,7 @@ export const productTableColumns: ColumnDef<Product>[] = [
     cell: (row) => {
       const product = row.row.original as Product;
       return (
-        <AlertDialog>
-          <TableDropdownMenu product={product} />
-        </AlertDialog >
+        <TableDropdownMenu product={product} />
 
       )
     }

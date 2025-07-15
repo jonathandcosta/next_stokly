@@ -1,7 +1,7 @@
 'use client';
 
-import { createProduct } from "@/app/_actions/product/create-product/index.";
-import { createProductSchema, CreateProductSchema } from "@/app/_actions/product/create-product/schema";
+import { upsertProduct } from "@/app/_actions/product/upsert-product/index.";
+import { upsertProductSchema, UpsertProductSchema } from "@/app/_actions/product/upsert-product/schema";
 import { Button } from "@/app/_components/ui/button";
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/app/_components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
@@ -12,15 +12,17 @@ import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 
 interface UpsertProductDialogContentProps {
-  defaltValues?: CreateProductSchema;
+  defaltValues?: UpsertProductSchema;
   onSuccess?: () => void;
 }
 
-const UpsertProductDialogContent = ({ defaltValues, onSuccess }: UpsertProductDialogContentProps) => {
-
-  const form = useForm<CreateProductSchema>({
+const UpsertProductDialogContent = ({
+  defaltValues,
+  onSuccess
+}: UpsertProductDialogContentProps) => {
+  const form = useForm<UpsertProductSchema>({
     shouldUnregister: true,
-    resolver: zodResolver(createProductSchema),
+    resolver: zodResolver(upsertProductSchema),
     defaultValues: defaltValues ?? {
       name: "",
       price: 0,
@@ -30,9 +32,9 @@ const UpsertProductDialogContent = ({ defaltValues, onSuccess }: UpsertProductDi
 
   const isEditing = !!defaltValues;
 
-  const onSubmit = async (data: CreateProductSchema) => {
+  const onSubmit = async (data: UpsertProductSchema) => {
     try {
-      await createProduct(data)
+      await upsertProduct({ ...data, id: defaltValues?.id });
       onSuccess?.()
     } catch (error) {
       console.error(error)

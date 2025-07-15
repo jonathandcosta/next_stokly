@@ -47,7 +47,7 @@ const TableDropdownMenu = ({ product }: { product: Product }) => {
               <DropdownMenuItem
                 className="gap-1.5"
                 onClick={() => {
-                  setDialogOpenEdit(true);
+                  // setDialogOpenEdit(true);
                   setDropdownMenuOpen(false);
                 }}
               >
@@ -72,10 +72,12 @@ const TableDropdownMenu = ({ product }: { product: Product }) => {
         </DropdownMenu >
         <UpsertProductDialogContent
           defaltValues={{
+            id: product.id,
             name: product.name,
             stock: product.stock,
             price: Number(product.price),
-          }} />
+          }}
+          onSuccess={() => setDialogOpenEdit(false)} />
         <DeleteProductDialogContent productId={product.id} />
       </Dialog>
     </AlertDialog >
