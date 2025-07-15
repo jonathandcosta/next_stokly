@@ -1,7 +1,6 @@
 "use client";
 
 import TableDropdownMenu from "@/app/products/_components/table-dropdownmenu";
-import { AlertDialog } from "@/app/_components/ui/alert-dialog";
 import { Badge } from "@/app/_components/ui/badge";
 
 import { Product } from "@prisma/client";
@@ -22,6 +21,13 @@ export const productTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "price",
     header: "Valor unitário",
+    cell: (row) => {
+      const product = row.row.original;
+      return Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(Number(product.price));
+    }
   },
   {
     accessorKey: "stock",

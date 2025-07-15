@@ -47,7 +47,6 @@ const TableDropdownMenu = ({ product }: { product: Product }) => {
               <DropdownMenuItem
                 className="gap-1.5"
                 onClick={() => {
-                  // setDialogOpenEdit(true);
                   setDropdownMenuOpen(false);
                 }}
               >
