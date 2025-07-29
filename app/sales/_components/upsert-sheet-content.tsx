@@ -5,8 +5,12 @@ import { Combobox, ComboboxOption } from "@/app/_components/ui/combobox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
 import { Input } from "@/app/_components/ui/input";
 import { SheetContent, SheetDescription, SheetTitle, SheetHeader } from "@/app/_components/ui/sheet";
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/app/_components/ui/table";
+import { formatCurrency } from "@/app/_helpers/currency";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Product } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -14,33 +18,56 @@ const formSchema = z.object({
   productId: z.string().uuid({
     message: "Selecione um produto válido",
   }),
-  quatity: z.coerce.number().int().positive(),
+  quantity: z.coerce.number().int().positive(),
 })
 
 type FormSchema = z.infer<typeof formSchema>;
 
 interface UpsertSheetContentProps {
+  products: Product[];
   productsOptions: ComboboxOption[];
 }
 
-const UpsertSheetContent = ({ productsOptions }: UpsertSheetContentProps) => {
+interface SelectedProduct {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+const UpsertSheetContent = ({ productsOptions, products }: UpsertSheetContentProps) => {
+  const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       productId: "",
-      quatity: 1,
+      quantity: 1,
     },
-  })
+  });
 
   const onSubmit = (data: FormSchema) => {
-    // Handle form submission logic here
-    console.log(data);
-  };
+    const selectedProduct = products.find(
+      (product) => product.id === data.productId
+    );
+
+    if (!selectedProduct) return;
+
+    setSelectedProducts((prev) => [
+      ...prev,
+      {
+        productId: selectedProduct.id,
+        name: selectedProduct.name,
+        price: Number(selectedProduct.price),
+        quantity: data.quantity,
+      },
+    ]);
+    form.reset({});
+  }
 
 
   return (
-    <SheetContent>
+    <SheetContent className="sm:max-w-2xl">
       <SheetHeader>
         <SheetTitle>Nova Venda</SheetTitle>
         <SheetDescription>
@@ -70,7 +97,7 @@ const UpsertSheetContent = ({ productsOptions }: UpsertSheetContentProps) => {
 
           <FormField
             control={form.control}
-            name="quatity"
+            name="quantity"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Quantidade</FormLabel>
@@ -90,6 +117,38 @@ const UpsertSheetContent = ({ productsOptions }: UpsertSheetContentProps) => {
         </form>
 
       </Form>
+
+      <Table>
+        <TableCaption>Lista de produtos adicionados à venda</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Produto</TableHead>
+            <TableHead>Quantidade</TableHead>
+            <TableHead>Preço</TableHead>
+            <TableHead>Total</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {selectedProducts.map((product) => (
+            <TableRow key={product.productId}>
+              <TableCell>{product.name}</TableCell>
+              <TableCell> {formatCurrency(product.price)}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
+              <TableCell>{formatCurrency(product.price * product.quantity)}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3} className="text-right font-semibold">
+              Total:
+            </TableCell>
+            <TableCell>
+              R$ {selectedProducts.reduce((total, product) => total + (product.price * product.quantity), 0).toFixed(2)}
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
     </SheetContent>
   );
 };
