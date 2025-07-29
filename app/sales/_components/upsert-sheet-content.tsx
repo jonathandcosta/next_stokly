@@ -29,7 +29,7 @@ interface UpsertSheetContentProps {
 }
 
 interface SelectedProduct {
-  productId: string;
+  id: string;
   name: string;
   price: number;
   quantity: number;
@@ -52,16 +52,28 @@ const UpsertSheetContent = ({ productsOptions, products }: UpsertSheetContentPro
     );
 
     if (!selectedProduct) return;
-
-    setSelectedProducts((prev) => [
-      ...prev,
+    setSelectedProducts((currentProducts) => {
+      const existingProduct = currentProducts.find(
+        (product) => product.id === selectedProduct.id);
+      if (existingProduct) {
+        return currentProducts.map((product) => {
+          if (product.id === existingProduct.id) {
+            return {
+              ...product,
+              quantity: product.quantity + data.quantity,
+            };
+          }
+          return product;
+        })
+      }
+      return [...currentProducts,
       {
-        productId: selectedProduct.id,
-        name: selectedProduct.name,
+        ...selectedProduct,
         price: Number(selectedProduct.price),
         quantity: data.quantity,
-      },
-    ]);
+      }
+      ];
+    });
     form.reset({});
   }
 
@@ -134,7 +146,7 @@ const UpsertSheetContent = ({ productsOptions, products }: UpsertSheetContentPro
         </TableHeader>
         <TableBody>
           {selectedProducts.map((product) => (
-            <TableRow key={product.productId}>
+            <TableRow key={product.id}>
               <TableCell>{product.name}</TableCell>
               <TableCell> {formatCurrency(product.price)}</TableCell>
               <TableCell>{product.quantity}</TableCell>
